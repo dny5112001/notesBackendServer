@@ -27,17 +27,21 @@ app.use(express.urlencoded({ extended: true }));
 dotenv.config();
 
 // database connection
-mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 30000, // 30 seconds
+    });
     console.log("Connected to MongoDB");
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
+  } catch (err) {
+    console.error("Error connecting to MongoDB:", err.message);
+  }
+};
+
+// Call the function to connect to the database
+connectDB();
 
 const PORT = process.env.PORT || 3000;
 
