@@ -154,7 +154,7 @@ router.post("/createnotes", islogged, async (req, res) => {
 });
 // updating the notes
 
-router.post("/updatenotes/:id", islogged, async (req, res) => {
+router.put("/updatenotes/:id", islogged, async (req, res) => {
   try {
     let { modifiedContent } = req.body;
     let noteId = req.params.id;
